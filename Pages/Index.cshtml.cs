@@ -5,21 +5,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using torreAssesment.Repository;
 
 namespace torreAssesment.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IDataService DataService;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(IDataService dataService)
         {
-            _logger = logger;
+            DataService = dataService;
         }
 
-        public void OnGet()
+        public async void OnGet([FromQuery] string username)
         {
-
+            if (!string.IsNullOrWhiteSpace(username))
+            {
+                var res = await DataService.GetProfile(username);
+            }
+            
         }
     }
 }
