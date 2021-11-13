@@ -24,6 +24,6 @@ namespace torreAssesment.ViewModels
         public string Theme { get; set; }
         public string Id { get; set; }
         public bool Claimant { get; set; }
-
+        public string Name { get; set; }
     }
 }

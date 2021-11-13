@@ -1,10 +1,73 @@
 ﻿@page
 @model IndexModel
+@using torreAssesment.ViewModels;
+@using System.Collections.Generic;
+@using System.Linq;
 @{
     ViewData["Title"] = "Home page";
+    ViewData["UserName"] = Model.Profile?.Person?.Name;
+    BioVm Person = Model.Profile?.Person;
+
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+@if (Model.Profile is null)
+{
+    <section>
+        <h4 class="centered">No profile selected.</h4>
+    </section>
+}
+else
+{
+    <section class="container my-5">
+        <h5>Profile Summary</h5>
+        <div class="row">
+            <div class="d-flex align-items-center flex-column col-md-2 px-2">
+                <img style="width:150px;height:150px;" src=@Person?.PictureThumbnail class="rounded-circle flex-row" alt="profile picture" />
+                <div style="display:block" class="align-items-center"><span>@Person?.Name</span></div>
+            </div>
+            <div class="d-flex align-items-center col-md-10 px-2">
+                <p>@Person.SummaryOfBio</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <h5>Skills</h5>
+        <div class="row">
+            @{
+                IEnumerable<IGrouping<string, StrenghtVm>> Categories = Model.Profile.Strengths.GroupBy(x => x.Proficiency);
+                foreach (var category in Categories)
+                {
+                    <div class="col-md-3">
+                        <h6>@category.Key</h6>
+                        
+                            @foreach (var item in category)
+                            {
+                                <button class="btn-sm btn-link btn-outline-secondary my-1 rounded-pill" onclick="">@item.Name</button>
+                            }
+                        
+                    </div>
+                }
+            }
+        </div>
+    </section>
+
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Skill Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
