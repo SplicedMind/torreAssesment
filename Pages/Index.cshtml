@@ -7,24 +7,24 @@
     ViewData["Title"] = "Home page";
     ViewData["UserName"] = Model.Profile?.Person?.Name;
     BioVm Person = Model.Profile?.Person;
-
+    
 }
 
 
 @if (Model.Profile is null)
 {
     <section>
-        <h4 class="centered">No profile selected.</h4>
+        <h4 class="centered">No profile selected</h4>
     </section>
 }
 else
 {
-    <section class="container my-5">
-        <h5>Profile Summary</h5>
+    <section class="container my-2 p-3">
+        <h5 class="mb-4 font-weight-bolder">Profile Summary</h5>
         <div class="row">
             <div class="d-flex align-items-center flex-column col-md-2 px-2">
                 <img style="width:150px;height:150px;" src=@Person?.PictureThumbnail class="rounded-circle flex-row" alt="profile picture" />
-                <div style="display:block" class="align-items-center"><span>@Person?.Name</span></div>
+                <div style="display:block" class="align-items-center pt-2"><span class="font-weight-bold text-dark">@Person?.Name</span></div>
             </div>
             <div class="d-flex align-items-center col-md-10 px-2">
                 <p>@Person.SummaryOfBio</p>
@@ -32,15 +32,15 @@ else
         </div>
     </section>
 
-    <section class="container">
-        <h5>Skills</h5>
+    <section class="container my-3 p-3">
+        <h5 class="mb-4 font-weight-bolder">Skills</h5>
         <div class="row">
             @{
                 IEnumerable<IGrouping<string, StrenghtVm>> Categories = Model.Profile.Strengths.GroupBy(x => x.Proficiency);
                 foreach (var category in Categories)
                 {
                     <div class="col-md-3">
-                        <h6>@category.Key</h6>
+                        <h6 class="text-capitalize font-weight-bold">@category.Key</h6>
                         
                             @foreach (var item in category)
                             {
@@ -52,22 +52,6 @@ else
             }
         </div>
     </section>
-
-    <div class="modal-dialog modal-fullscreen">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Skill Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 }
 
